@@ -1,0 +1,52 @@
+plugins {
+  id 'org.liquibase.gradle' version '1.2.1'
+}
+apply plugin: 'java'
+apply plugin: "eclipse"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+project.ext {
+    springframeworkVersion = '4.2.6.RELEASE'
+}
+
+configurations {
+  all*.exclude group: "commons-logging", module: "commons-logging"
+  all*.exclude group: "log4j", module: "log4j"
+}
+
+dependencies {
+  compile group: 'org.springframework', name: 'spring-core', version:project.ext.springframeworkVersion
+  compile group: 'org.springframework', name: 'spring-orm', version:project.ext.springframeworkVersion
+  compile group: 'org.springframework', name: 'spring-tx', version:project.ext.springframeworkVersion
+  compile group: 'org.mybatis', name: 'mybatis-spring', version: '1.3.0'
+  compile group: 'org.slf4j', name: 'slf4j-api', version:'1.6.1'
+  compile group: 'org.slf4j', name: 'jcl-over-slf4j', version:'1.6.1'
+  compile group: 'ch.qos.logback', name: 'logback-core', version:'0.9.21'
+  compile group: 'ch.qos.logback', name: 'logback-classic', version:'0.9.21'
+  compile group: 'com.h2database', name: 'h2', version:'1.4.192'
+
+  testCompile group: 'com.ninja-squad', name: 'DbSetup', version: '2.1.0'
+}
+
+// ./gradlew update -PrunList=main -PmainUrl=xxx -PmainUsername=xxx -PmainPassword=xxx
+liquibase {
+  activities {
+    main {
+      changeLogFile 'db/main.xml'
+      // url project.ext.mainUrl
+      // username project.ext.mainUsername
+      // password project.ext.mainPassword
+    }
+  }
+  runList = 'main'
+  if (project.hasProperty('runList')) {
+    runList = project.ext.runList; 
+  }
+}
