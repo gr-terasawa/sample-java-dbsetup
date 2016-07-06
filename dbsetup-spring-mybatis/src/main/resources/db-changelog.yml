@@ -1,0 +1,181 @@
+databaseChangeLog:
+    - changeSet:
+        id: 1
+        author: opentone
+        changes:
+            - createTable:
+                tableName: foo
+                columns:
+                    - column:
+                        name: id
+                        type: int
+                        autoIncrement: true
+                        constraints:
+                            primaryKey: true
+                            nullable: false
+                    - column:
+                        name: name
+                        type: varchar(100)
+                        constraints:
+                            nullable: false
+    - changeSet:
+        id: 2
+        author: opentone
+        changes:
+            - createTable:
+                tableName: company
+                columns:
+                    - column:
+                        name: id
+                        type: bigint
+                        autoIncrement: true
+                        constraints:
+                            primaryKey: true
+                            nullable: false
+                    - column:
+                        name: company_cd
+                        type: varchar(10)
+                        constraints:
+                            nullable: false
+                    - column:
+                        name: name
+                        type: varchar(100)
+                        constraints:
+                            nullable: false
+                    - column:
+                        name: remarks
+                        type: varchar(1000)
+                        constraints:
+                            nullable: true
+                    - column:
+                        name: created_at
+                        type: datetime
+                        constraints:
+                            nullable: false
+                    - column:
+                        name: updated_at
+                        type: datetime
+                        constraints:
+                            nullable: false
+            - createTable:
+                tableName: section
+                columns:
+                    - column:
+                        name: id
+                        type: bigint
+                        autoIncrement: true
+                        constraints:
+                            primaryKey: true
+                            nullable: false
+                    - column:
+                        name: section_cd
+                        type: varchar(10)
+                        constraints:
+                            nullable: false
+                    - column:
+                        name: name
+                        type: varchar(100)
+                        constraints:
+                            nullable: false
+                    - column:
+                        name: company_id
+                        type: bigint
+                        constraints:
+                            nullable: false
+                    - column:
+                        name: created_at
+                        type: datetime
+                        constraints:
+                            nullable: false
+                    - column:
+                        name: updated_at
+                        type: datetime
+                        constraints:
+                            nullable: false
+            - createTable:
+                tableName: employee
+                columns:
+                    - column:
+                        name: id
+                        type: bigint
+                        autoIncrement: true
+                        constraints:
+                            primaryKey: true
+                            nullable: false
+                    - column:
+                        name: emp_no
+                        type: varchar(10)
+                        constraints:
+                            nullable: false
+                    - column:
+                        name: name
+                        type: varchar(100)
+                        constraints:
+                            nullable: false
+                    - column:
+                        name: mail_address
+                        type: varchar(1000)
+                        constraints:
+                            nullable: true
+                    - column:
+                        name: created_at
+                        type: datetime
+                        constraints:
+                            nullable: false
+                    - column:
+                        name: updated_at
+                        type: datetime
+                        constraints:
+                            nullable: false
+            - createTable:
+                tableName: section_employee
+                columns:
+                    - column:
+                        name: id
+                        type: bigint
+                        autoIncrement: true
+                        constraints:
+                            primaryKey: true
+                            nullable: false
+                    - column:
+                        name: section_id
+                        type: bigint
+                        autoIncrement: true
+                        constraints:
+                            nullable: false
+                    - column:
+                        name: employee_id
+                        type: bigint
+                        autoIncrement: true
+                        constraints:
+                            nullable: false
+                    - column:
+                        name: created_at
+                        type: datetime
+                        constraints:
+                            nullable: false
+                    - column:
+                        name: updated_at
+                        type: datetime
+                        constraints:
+                            nullable: false
+            - addForeignKeyConstraint:
+                constraintName: fk_section_01
+                baseTableName: section
+                baseColumnNames: company_id
+                referencedTableName: company
+                referencedColumnNames: id
+            - addForeignKeyConstraint:
+                constraintName: fk_section_employee_01
+                baseTableName: section_employee
+                baseColumnNames: section_id
+                referencedTableName: section
+                referencedColumnNames: id
+            - addForeignKeyConstraint:
+                constraintName: fk_section_employee_02
+                baseTableName: section_employee
+                baseColumnNames: employee_id
+                referencedTableName: employee
+                referencedColumnNames: id
+
+

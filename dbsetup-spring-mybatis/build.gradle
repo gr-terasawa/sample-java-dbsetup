@@ -1,6 +1,3 @@
-plugins {
-  id 'org.liquibase.gradle' version '1.2.1'
-}
 apply plugin: 'java'
 apply plugin: "eclipse"
 
@@ -22,31 +19,26 @@ configurations {
 }
 
 dependencies {
+  compile group: 'org.projectlombok', name: 'lombok', version: '1.16.8'
+  compile group: 'com.h2database', name: 'h2', version:'1.4.192'
+  compile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.1'
+
+  testCompile(group: 'junit', name: 'junit', version:'4.12') {
+    transitive = false
+  }
+  testCompile 'org.hamcrest:hamcrest-all:1.3'
+  testCompile group: 'com.ninja-squad', name: 'DbSetup', version: '2.1.0'
+
   compile group: 'org.springframework', name: 'spring-core', version:project.ext.springframeworkVersion
+  compile group: 'org.springframework', name: 'spring-context', version:project.ext.springframeworkVersion
   compile group: 'org.springframework', name: 'spring-orm', version:project.ext.springframeworkVersion
   compile group: 'org.springframework', name: 'spring-tx', version:project.ext.springframeworkVersion
+  compile group: 'org.mybatis', name: 'mybatis', version: '3.4.1'
   compile group: 'org.mybatis', name: 'mybatis-spring', version: '1.3.0'
   compile group: 'org.slf4j', name: 'slf4j-api', version:'1.6.1'
   compile group: 'org.slf4j', name: 'jcl-over-slf4j', version:'1.6.1'
   compile group: 'ch.qos.logback', name: 'logback-core', version:'0.9.21'
   compile group: 'ch.qos.logback', name: 'logback-classic', version:'0.9.21'
-  compile group: 'com.h2database', name: 'h2', version:'1.4.192'
 
-  testCompile group: 'com.ninja-squad', name: 'DbSetup', version: '2.1.0'
-}
-
-// ./gradlew update -PrunList=main -PmainUrl=xxx -PmainUsername=xxx -PmainPassword=xxx
-liquibase {
-  activities {
-    main {
-      changeLogFile 'db/main.xml'
-      // url project.ext.mainUrl
-      // username project.ext.mainUsername
-      // password project.ext.mainPassword
-    }
-  }
-  runList = 'main'
-  if (project.hasProperty('runList')) {
-    runList = project.ext.runList; 
-  }
+  testCompile group: 'org.springframework', name: 'spring-test', version:project.ext.springframeworkVersion
 }
