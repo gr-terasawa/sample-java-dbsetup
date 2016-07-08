@@ -4,25 +4,6 @@ databaseChangeLog:
         author: opentone
         changes:
             - createTable:
-                tableName: foo
-                columns:
-                    - column:
-                        name: id
-                        type: int
-                        autoIncrement: true
-                        constraints:
-                            primaryKey: true
-                            nullable: false
-                    - column:
-                        name: name
-                        type: varchar(100)
-                        constraints:
-                            nullable: false
-    - changeSet:
-        id: 2
-        author: opentone
-        changes:
-            - createTable:
                 tableName: company
                 columns:
                     - column:
@@ -177,5 +158,3 @@ databaseChangeLog:
                 baseColumnNames: employee_id
                 referencedTableName: employee
                 referencedColumnNames: id
-
-

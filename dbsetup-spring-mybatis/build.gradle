@@ -42,3 +42,24 @@ dependencies {
 
   testCompile group: 'org.springframework', name: 'spring-test', version:project.ext.springframeworkVersion
 }
+
+eclipse {
+  jdt {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    file {
+      File dir = file('.settings')
+      dir.mkdirs()
+
+      File f = file('.settings/org.eclipse.core.resources.prefs')
+      f.write('eclipse.preferences.version=1\n')
+      f.append('encoding/<project>=utf-8')
+    }
+  }
+}
+
+cleanEclipse << {
+    File f = file('.settings/org.eclipse.core.resources.prefs')
+    f.delete()
+}
